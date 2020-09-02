@@ -189,4 +189,14 @@ public:
 		//if there were no element which matches the input return false
 		return false;
 	}
+
+	//Returns the First element of the list
+	T First() {
+		return (*Head).data;
+	}
+
+	//Returns the Last element of the list
+	T Last() {
+		return (*Tail).data;
+	}
 };
