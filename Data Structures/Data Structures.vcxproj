@@ -141,12 +141,14 @@
   <ItemGroup>
     <ClCompile Include="Array.cpp" />
     <ClCompile Include="Data Structures.cpp" />
+    <ClCompile Include="DynamicArray.cpp" />
     <ClCompile Include="List.cpp" />
     <ClCompile Include="Queue.cpp" />
     <ClCompile Include="Stack.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
+    <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="List.h" />
     <ClInclude Include="Queue.h" />
     <ClInclude Include="Stack.h" />

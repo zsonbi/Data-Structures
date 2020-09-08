@@ -4,9 +4,18 @@
 #include <iostream>
 #include "Stack.h"
 #include "Queue.h"
+#include "DynamicArray.h"
 
 int main()
 {
+	DynamicArray<int> arr;
+	arr.Add(4);
+	arr.Add(45);
+	arr.Add(5);
+
+	std::cout << arr.Length() << std::endl;
+	std::cout << arr.MaxSize() << std::endl;
+	std::cout << arr[1] << std::endl;
 	std::cout << "Hello World!\n";
 }
 
