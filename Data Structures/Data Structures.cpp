@@ -8,14 +8,24 @@
 
 int main()
 {
-	DynamicArray<int> arr;
-	arr.Add(4);
-	arr.Add(45);
-	arr.Add(5);
+	List<int> list;
+	list.Add(4);
+	list.Add(45);
+	list.Add(5);
+	list.Add(53);
+	list.Add(10);
 
-	std::cout << arr.Length() << std::endl;
-	std::cout << arr.MaxSize() << std::endl;
-	std::cout << arr[1] << std::endl;
+	for (size_t i = 0; i < list.Count(); i++)
+	{
+		std::cout << list[i] << std::endl;
+	}
+	std::cout << "-----------" << std::endl;
+	list.FastSort();
+	for (size_t i = 0; i < list.Count(); i++)
+	{
+		std::cout << list[i] << std::endl;
+	}
+
 	std::cout << "Hello World!\n";
 }
 

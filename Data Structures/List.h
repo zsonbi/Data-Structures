@@ -144,7 +144,7 @@ public:
 	}
 
 	//BubbleSort Algorithm
-	void Sort() {
+	void BubbleSort() {
 		//If we try to sort an empty array throw an exception
 		if (IsEmpty()) {
 			throw "The List is empty";
@@ -168,6 +168,46 @@ public:
 				pointer = (*pointer).Next;
 			}//for
 		}
+	}
+
+	//Fast Sort
+	void SelectionSort() {
+		//If we try to sort an empty array throw an exception
+		if (IsEmpty()) {
+			throw "The List is empty";
+		}
+
+		Node<T>* prev = nullptr;
+		Node<T>* biggest = nullptr;
+		Node<T>* beforeBiggest = nullptr;
+		Node<T>* travel = nullptr;
+
+		//Going through the List
+		for (size_t i = 0; i < CurrentSize; i++)
+		{
+			travel = GetIndex(i);
+			biggest = travel;
+			for (size_t j = i; j < CurrentSize; j++)
+			{
+				if ((*biggest).data < (*travel).data) {
+					biggest = travel;
+					beforeBiggest = GetIndex(j - 1);
+				}
+				travel = (*travel).Next;
+			}
+			(*beforeBiggest).Next = (*biggest).Next;
+			if (prev == nullptr) {
+				(*biggest).Next = Head;
+				prev = biggest;
+				Head = biggest;
+			}
+			else {
+				(*biggest).Next = (*prev).Next;
+				(*prev).Next = biggest;
+				prev = biggest;
+			}
+		}
+		Tail = biggest;
 	}
 
 	//See if the List contains that element
