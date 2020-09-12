@@ -14,13 +14,17 @@ int main()
 	list.Add(5);
 	list.Add(53);
 	list.Add(10);
+	list.Add(10);
+	list.Add(10);
+	list.Add(10);
+	list.Add(10);
 
 	for (size_t i = 0; i < list.Count(); i++)
 	{
 		std::cout << list[i] << std::endl;
 	}
 	std::cout << "-----------" << std::endl;
-	list.FastSort();
+	list.SelectionSort();
 	for (size_t i = 0; i < list.Count(); i++)
 	{
 		std::cout << list[i] << std::endl;
