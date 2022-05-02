@@ -41,18 +41,64 @@ public:
 		delete[] buckets;
 	}
 
+private:
 	int Hash(T input)
 	{
 		return std::hash<T>()(input);
 	}
 
 	/// <summary>
+	/// Resizes the table
+	/// </summary>
+	/// <param name="size">The new size</param>
+	void ResizeTable(size_t size) {
+		int oldSize = currentSize;
+		currentSize = size;
+		usedBuckets = 0.0f;
+		KeyValuePair* oldBuckets = buckets;
+		buckets = new KeyValuePair[size];
+
+		for (size_t i = 0; i < currentSize; i++)
+		{
+			buckets[i] = emptyCell;
+		}
+
+		for (int i = 0; i < oldSize; i++)
+		{
+			if (oldBuckets[i].key != emptyCell.key && oldBuckets[i].key != tombStone.key) {
+				AddElement(oldBuckets[i].key, oldBuckets[i].value);
+			}
+		}
+
+		delete[] oldBuckets;
+	}
+
+public:
+	/// <summary>
 	/// Get an element from the table
 	/// </summary>
 	/// <param name="key">The key how we will determine the element</param>
 	/// <returns>The element if the table contains it NULL if it isn't</returns>
 	T& operator[](int key) {
-		return GetElement(key);
+		size_t index;
+		//Handle negative hash
+		if (key < 0) {
+			index = abs(key) % currentSize;
+		}
+		else
+		{
+			index = key % currentSize;
+		}
+		while (true) {
+			if (buckets[index].key == emptyCell.key) {
+				throw "No such element in the table";
+			}
+			else if (buckets[index].key == key) {
+				return buckets[index].value;
+			}
+
+			index = (index + 1) % currentSize;
+		}
 	}
 
 	/// <summary>
@@ -239,32 +285,6 @@ public:
 
 			index = (index + 1) % currentSize;
 		}
-	}
-
-	/// <summary>
-	/// Resizes the table
-	/// </summary>
-	/// <param name="size">The new size</param>
-	void ResizeTable(size_t size) {
-		int oldSize = currentSize;
-		currentSize = size;
-		usedBuckets = 0.0f;
-		KeyValuePair* oldBuckets = buckets;
-		buckets = new KeyValuePair[size];
-
-		for (size_t i = 0; i < currentSize; i++)
-		{
-			buckets[i] = emptyCell;
-		}
-
-		for (int i = 0; i < oldSize; i++)
-		{
-			if (oldBuckets[i].key != emptyCell.key && oldBuckets[i].key != tombStone.key) {
-				AddElement(oldBuckets[i].key, oldBuckets[i].value);
-			}
-		}
-
-		delete[] oldBuckets;
 	}
 };
 

@@ -9,6 +9,7 @@
 
 int main()
 {
+	//Tests
 	List<int> list;
 	list.Add(4);
 	list.Add(45);
@@ -55,6 +56,7 @@ int main()
 	std::cout << hashTable.ContainsKey(tenHash) << std::endl;
 	std::cout << hashTable.ContainsKey(idkHash) << std::endl;
 	std::cout << hashTable.ContainsKey(42) << std::endl;
+	std::cout << "Indexing: " << hashTable[tenHash] << std::endl;
 
 	hashTable.RemoveElement(663);
 	hashTable.RemoveElement(66325);
