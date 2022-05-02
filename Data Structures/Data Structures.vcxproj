@@ -149,6 +149,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Array.h" />
+    <ClInclude Include="Dictionary.h" />
     <ClInclude Include="DynamicArray.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="List.h" />

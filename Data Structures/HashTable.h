@@ -33,9 +33,23 @@ public:
 		}
 	}
 
+	//Free up memory
+	~HashTable() {
+		delete[] buckets;
+	}
+
 	int Hash(T input)
 	{
 		return std::hash<T>()(input);
+	}
+
+	/// <summary>
+	/// Get an element from the table
+	/// </summary>
+	/// <param name="key">The key how we will determine the element</param>
+	/// <returns>The element if the table contains it NULL if it isn't</returns>
+	T& operator[](int key) {
+		return GetElement(key);
 	}
 
 	/// <summary>

@@ -5,6 +5,7 @@
 #include "Queue.h"
 #include "DynamicArray.h"
 #include "HashTable.h"
+#include "Dictionary.h"
 
 int main()
 {
@@ -30,7 +31,7 @@ int main()
 		std::cout << list[i] << std::endl;
 	}
 
-	std::cout << "Hello World!\n";
+	std::cout << "-------------------------------Hash Table-----------------------------\n";
 
 	//hashtable test
 	HashTable<int> hashTable;
@@ -58,6 +59,34 @@ int main()
 	hashTable.RemoveElement(663);
 	hashTable.RemoveElement(66325);
 	hashTable.RemoveElement(624);
+
+	std::cout << "--------------------------------------Dictionary-----------------------------------------" << std::endl;
+	Dictionary<int, long> dictionary;
+	dictionary.Add(10, 5200);
+	dictionary.Add(15, 5362);
+	dictionary.Add(18, 5201);
+	dictionary.Add(62, 5201);
+	dictionary.Add(31, 5201);
+	dictionary.Add(131, 5201);
+	dictionary.Add(162, 5261);
+
+	dictionary.RemoveByKey(162);
+
+	std::cout << "ContainsKey (should be true):" << dictionary.ContainsKey(10) << std::endl;
+	std::cout << "ContainsKey (should be true):" << dictionary.ContainsKey(15) << std::endl;
+	std::cout << "ContainsKey (should be true):" << dictionary.ContainsKey(18) << std::endl;
+	std::cout << "ContainsKey (should be true):" << dictionary.ContainsKey(62) << std::endl;
+	std::cout << "ContainsKey (should be true):" << dictionary.ContainsKey(31) << std::endl;
+	std::cout << "ContainsKey (should be false):" << dictionary.ContainsKey(32361) << std::endl;
+	std::cout << "ContainsKey (should be false):" << dictionary.ContainsKey(31512) << std::endl;
+	std::cout << "ContainsKey (should be false):" << dictionary.ContainsKey(31231) << std::endl;
+
+	std::cout << "Indexing:[10 - 5200] " << dictionary[10] << std::endl;
+	std::cout << "Indexing:[15 - 5362] " << dictionary[15] << std::endl;
+	std::cout << "Indexing:[18 - 5201] " << dictionary[18] << std::endl;
+	std::cout << "Indexing:[62 - 5201] " << dictionary[62] << std::endl;
+	std::cout << "Indexing:[31 - 5201] " << dictionary[31] << std::endl;
+	std::cout << "Indexing:[131 - 5201] " << dictionary[131] << std::endl;
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
