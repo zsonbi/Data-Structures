@@ -1,10 +1,10 @@
 // Data Structures.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
 #include "Stack.h"
 #include "Queue.h"
 #include "DynamicArray.h"
+#include "HashTable.h"
 
 int main()
 {
@@ -18,7 +18,7 @@ int main()
 	list.Add(10);
 	list.Add(10);
 	list.Add(10);
-
+	list[0] = 3;
 	for (size_t i = 0; i < list.Count(); i++)
 	{
 		std::cout << list[i] << std::endl;
@@ -31,6 +31,29 @@ int main()
 	}
 
 	std::cout << "Hello World!\n";
+
+	//hashtable test
+	HashTable<int> hashTable;
+
+	int tenHash = hashTable.AddElement(10);
+	hashTable.AddElement(523);
+	hashTable.AddElement(6);
+	hashTable.AddElement(663);
+	hashTable.AddElement(6631);
+	hashTable.AddElement(6635);
+	hashTable.AddElement(65);
+	hashTable.AddElement(676325);
+	hashTable.AddElement(663225);
+	hashTable.AddElement(6665);
+	hashTable.AddElement(668225);
+	int idkHash = hashTable.AddElement(624);
+
+	std::cout << hashTable.GetElement(tenHash) << std::endl;
+	std::cout << hashTable.GetElement(idkHash) << std::endl;
+
+	hashTable.RemoveElement(663);
+	hashTable.RemoveElement(66325);
+	hashTable.RemoveElement(624);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
