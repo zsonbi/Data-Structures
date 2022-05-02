@@ -4,7 +4,11 @@
 #include <functional>
 #include <iostream>
 #define BUCKET_THRESHOLD 0.7f //If the usedBuckets is above this resize the table
-
+/// <summary>
+/// Creates a new dictionary
+/// </summary>
+/// <typeparam name="K">Type of the key</typeparam>
+/// <typeparam name="T">Type of the element</typeparam>
 template <typename K, typename T>
 class Dictionary {
 private:
@@ -14,8 +18,9 @@ private:
 	};
 private:
 	const static unsigned char baseSize = 8;
-	const KeyValuePair tombStone = { -1 };
-	const KeyValuePair emptyCell = { -2 };
+
+	const KeyValuePair tombStone = { -1 };	//This is a placeholder for deleted cells
+	const KeyValuePair emptyCell = { -2 };	//This is a placeholder for empty cells
 
 	int currentSize; //The current size of the hash table
 	KeyValuePair* buckets; //The buckets where the data is stored
