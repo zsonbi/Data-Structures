@@ -51,6 +51,10 @@ int main()
 	std::cout << hashTable.GetElement(tenHash) << std::endl;
 	std::cout << hashTable.GetElement(idkHash) << std::endl;
 
+	std::cout << hashTable.ContainsKey(tenHash) << std::endl;
+	std::cout << hashTable.ContainsKey(idkHash) << std::endl;
+	std::cout << hashTable.ContainsKey(42) << std::endl;
+
 	hashTable.RemoveElement(663);
 	hashTable.RemoveElement(66325);
 	hashTable.RemoveElement(624);

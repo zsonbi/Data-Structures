@@ -137,6 +137,33 @@ public:
 	}
 
 	/// <summary>
+	/// Checks if the table contains that key
+	/// </summary>
+	/// <param name="key">The key to search for</param>
+	/// <returns>true if it has that key false if it isn't</returns>
+	bool ContainsKey(int key) {
+		size_t index;
+		//Handle negative hash
+		if (key < 0) {
+			index = abs(key) % currentSize;
+		}
+		else
+		{
+			index = key % currentSize;
+		}
+		while (true) {
+			if (buckets[index].key == emptyCell.key) {
+				return false;
+			}
+			else if (buckets[index].key == key) {
+				return true;
+			}
+
+			index = (index + 1) % currentSize;
+		}
+	}
+
+	/// <summary>
 	/// Removes an element from the table
 	/// </summary>
 	/// <param name="key">The element's key</param>
