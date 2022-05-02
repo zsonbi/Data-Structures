@@ -1,5 +1,4 @@
 // Data Structures.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
 
 #include <iostream>
 #include "Stack.h"
@@ -18,7 +17,7 @@ int main()
 	list.Add(10);
 	list.Add(10);
 	list.Add(10);
-
+	list[0] = 3;
 	for (size_t i = 0; i < list.Count(); i++)
 	{
 		std::cout << list[i] << std::endl;

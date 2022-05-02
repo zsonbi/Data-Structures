@@ -23,7 +23,7 @@ public:
 	T Pop() {
 		//If the stack is empty throw an exception
 		if (IsEmpty()) {
-			throw "The Queue is empty";
+			throw "The Stack is empty";
 		}//if
 		T out = data.Last();
 		//Removes the last element of the list
