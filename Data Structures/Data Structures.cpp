@@ -6,6 +6,7 @@
 #include "DynamicArray.h"
 #include "HashTable.h"
 #include "Dictionary.h"
+#include "AVL.h"
 
 int main()
 {
@@ -89,6 +90,50 @@ int main()
 	std::cout << "Indexing:[62 - 5201] " << dictionary[62] << std::endl;
 	std::cout << "Indexing:[31 - 5201] " << dictionary[31] << std::endl;
 	std::cout << "Indexing:[131 - 5201] " << dictionary[131] << std::endl;
+
+	//AVL tests
+	std::cout << "--------------------------------------AVL-----------------------------------------" << std::endl;
+	AVL<int> avl;
+	avl.Insert(10, 15);
+	avl.Insert(20, 60);
+	avl.Insert(30, 50);
+	int res = *avl.Search(20);
+	if (res == 60) {
+		std::cout << "Passed test 1" << std::endl;
+	}
+	else {
+		std::cout << "Failed test 1" << std::endl;
+	}
+
+	avl.Delete(10);
+	avl.Delete(20);
+	avl.Delete(30);
+	if (avl.NumberOfNodes() == 0) {
+		std::cout << "Passed test 2" << std::endl;
+	}
+	else {
+		std::cout << "Failed test 2" << std::endl;
+	}
+
+	avl.Insert(50, 10);
+	avl.Insert(25, 10);
+	avl.Insert(15, 10);
+	avl.Insert(30, 10);
+	avl.Insert(20, 10);
+
+	if (avl.HeightOfTree() == 3) {
+		std::cout << "Passed test 3" << std::endl;
+	}
+	else {
+		std::cout << "Failed test 3" << std::endl;
+	}
+	avl.Delete(20);
+	if (avl.HeightOfTree() == 3) {
+		std::cout << "Passed test 4" << std::endl;
+	}
+	else {
+		std::cout << "Failed test 4" << std::endl;
+	}
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
