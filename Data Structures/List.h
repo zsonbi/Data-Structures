@@ -3,7 +3,7 @@
 template<typename T>
 struct Node {
 	T data;
-	Node* Next;
+	Node* next;
 };
 
 template<typename T>
@@ -24,26 +24,26 @@ private:
 		Node<T>* output = Head;
 		for (size_t i = 0; i < index; i++)
 		{
-			output = (*output).Next;
+			output = (*output).next;
 		}
 		return output;
 	}
 
 public:
 	//Add a new element to the List
-	void Add(T input) {
-		struct Node<T>* node = (Node<T>*)malloc(sizeof(Node<T>));
+	void Add(const T& input) {
+		struct Node<T>* node = new Node<T>();
 
 		if (CurrentSize == 0) {
 			Head = node;
 			Tail = node;
 		}
 		else {
-			(*Tail).Next = node;
+			(*Tail).next = node;
 			Tail = node;
 		}
 		(*node).data = input;
-		(*node).Next = nullptr;
+		(*node).next = nullptr;
 
 		CurrentSize++;
 	}
@@ -61,8 +61,22 @@ public:
 		return (*GetIndex(index)).data;
 	}
 
+	//Returns the indexed element
+	const T& operator[](size_t index) const {
+		if (IsEmpty()) {
+			throw "The List is empty";
+		}
+
+		if (CurrentSize <= index) {
+			throw "Index out of Bounds";
+		}
+
+		return (*GetIndex(index)).data;
+	}
+
+
 	//Removes a specific object from the List
-	void Remove(T input) {
+	void Remove(const T& input) {
 		if (IsEmpty()) {
 			throw "The List is empty";
 		}
@@ -72,7 +86,7 @@ public:
 
 		//If the first element is the object we want to remove
 		if ((*pointer).data == input) {
-			Head = (*pointer).Next;
+			Head = (*pointer).next;
 			delete pointer;
 			CurrentSize--;
 			return;
@@ -81,27 +95,27 @@ public:
 		for (size_t i = 0; i < CurrentSize; i++)
 		{
 			//Test for if it's the last element
-			if ((*pointer).Next != nullptr) {
-				if ((*(*pointer).Next).data == input) {
+			if ((*pointer).next != nullptr) {
+				if ((*(*pointer).next).data == input) {
 					break;
 				}//if
 				//Make the pointer point to the next node
-				pointer = (*pointer).Next;
+				pointer = (*pointer).next;
 			}//if
 			//If we reached the end without getting a match
 			else
 				throw "There is no element like this in the List";
 		}//for
 
-		if (Tail == (*pointer).Next) {
+		if (Tail == (*pointer).next) {
 			Tail = pointer;
-			delete (*pointer).Next;
-			(*Tail).Next = nullptr;
+			delete (*pointer).next;
+			(*Tail).next = nullptr;
 		}//if
 		else {
-			Node<T>* temp = (*(*pointer).Next).Next;
-			delete (*pointer).Next;
-			(*pointer).Next = temp;
+			Node<T>* temp = (*(*pointer).next).next;
+			delete (*pointer).next;
+			(*pointer).next = temp;
 		}//else
 		CurrentSize--;
 	}
@@ -116,7 +130,7 @@ public:
 		Node<T>* pointer = Head;
 		//So if we need to remove the first element
 		if (index == 0) {
-			Head = (*Head).Next;
+			Head = (*Head).next;
 			delete (pointer);
 			--CurrentSize;
 			return;
@@ -126,12 +140,12 @@ public:
 
 		//A temporary pointer to the object we want to remove
 		Node<T>* tempPointer;
-		tempPointer = (*pointer).Next;
-		(*pointer).Next = (*tempPointer).Next;
+		tempPointer = (*pointer).next;
+		(*pointer).next = (*tempPointer).next;
 		//So that we replace the Tail if we removed the last element
 		if (index == CurrentSize - 1) {
 			Tail = pointer;
-			(*Tail).Next = nullptr;
+			(*Tail).next = nullptr;
 		}
 
 		delete (tempPointer);
@@ -139,7 +153,7 @@ public:
 	}
 
 	//Returns the number of objects in the List
-	size_t Count() {
+	size_t Count() const {
 		return CurrentSize;
 	}
 
@@ -159,13 +173,13 @@ public:
 			for (size_t i = 0; i < CurrentSize - 1; i++)
 			{
 				//If we find a smaller element than the current one we swap their data
-				if ((*pointer).data > (*(*pointer).Next).data) {
+				if ((*pointer).data > (*(*pointer).next).data) {
 					T temp = (*pointer).data;
-					(*pointer).data = (*(*pointer).Next).data;
-					(*(*pointer).Next).data = temp;
+					(*pointer).data = (*(*pointer).next).data;
+					(*(*pointer).next).data = temp;
 					sorted = false;
 				}//if
-				pointer = (*pointer).Next;
+				pointer = (*pointer).next;
 			}//for
 		}
 	}
@@ -193,17 +207,17 @@ public:
 					biggest = travel;
 					beforeBiggest = GetIndex(j - 1);
 				}
-				travel = (*travel).Next;
+				travel = (*travel).next;
 			}
-			(*beforeBiggest).Next = (*biggest).Next;
+			(*beforeBiggest).next = (*biggest).next;
 			if (prev == nullptr) {
-				(*biggest).Next = Head;
+				(*biggest).next = Head;
 				prev = biggest;
 				Head = biggest;
 			}
 			else {
-				(*biggest).Next = (*prev).Next;
-				(*prev).Next = biggest;
+				(*biggest).next = (*prev).next;
+				(*prev).next = biggest;
 				prev = biggest;
 			}
 		}
@@ -211,7 +225,7 @@ public:
 	}
 
 	//See if the List contains that element
-	bool Contains(T input) {
+	bool Contains(const T& input) const {
 		//Pointer which we will traverse the list
 		Node<T>* pointer = Head;
 
@@ -223,7 +237,7 @@ public:
 			}//if
 
 			//point to the next element
-			pointer = (*pointer).Next;
+			pointer = (*pointer).next;
 		}//for
 
 		//if there were no element which matches the input return false
@@ -231,12 +245,22 @@ public:
 	}
 
 	//Returns the First element of the list
-	T First() {
+	const T& First() const {
+		return (*Head).data;
+	}
+
+	//Returns the First element of the list
+	T& First() {
 		return (*Head).data;
 	}
 
 	//Returns the Last element of the list
-	T Last() {
+	const T& Last() const {
+		return (*Tail).data;
+	}
+
+	//Returns the Last element of the list
+	T& Last() {
 		return (*Tail).data;
 	}
 };

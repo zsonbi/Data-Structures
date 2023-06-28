@@ -13,6 +13,10 @@ public:
 	//Returns the indexed data value from the array
 	T& operator[](size_t index) { return my_Data[index]; }
 
+	//Returns the indexed data value from the array
+	const T& operator[](size_t index) const
+	{ return my_Data[index]; }
+
 	//Returns the pointer to the array
 	T* Data() { return my_Data; }
 

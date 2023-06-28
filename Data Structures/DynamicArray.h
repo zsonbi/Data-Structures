@@ -54,18 +54,27 @@ public:
 		return *(mydata + index);
 	}
 
+	//Indexing the data
+	const T& operator[](size_t index) const {
+		if (currSize < index) {
+			throw "Index out of bounds";
+		}
+		return *(mydata + index);
+	}
+
+
 	//Return the current number of elements in the Vector
-	size_t Length() {
+	size_t Length() const {
 		return currSize;
 	}
 
 	//Returns the current max size of the array
-	size_t MaxSize() {
+	size_t MaxSize() const {
 		return maxSize;
 	}
 
 	//Add a new element to the array
-	void Add(T input) {
+	void Add(const T& input) {
 		if (currSize == maxSize) {
 			ChangeSize(maxSize * 2);
 		}
@@ -84,7 +93,7 @@ public:
 	}
 
 	//Remove a specific element from the array
-	void Remove(T input) {
+	void Remove(const T& input) {
 		size_t index = -1;
 		//Search for the input
 		for (size_t i = 0; i < currSize; i++)

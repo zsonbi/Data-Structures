@@ -60,7 +60,7 @@ public:
 	/// <param name="key">The key of the node this will be used to determine the node's place</param>
 	/// <param name="val">The value of the node</param>
 	/// <returns>true->succeeded, false->failed</returns>
-	bool Insert(int key, T val) {
+	bool Insert(int key, const T& val) {
 		Node* newNode = nullptr;
 		//If it's the first node set it as the tree
 		if (nullptr == m_Root) {

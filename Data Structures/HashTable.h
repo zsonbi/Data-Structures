@@ -42,7 +42,7 @@ public:
 	}
 
 private:
-	int Hash(T input)
+	int Hash(const T& input)
 	{
 		return std::hash<T>()(input);
 	}
@@ -79,34 +79,26 @@ public:
 	/// </summary>
 	/// <param name="key">The key how we will determine the element</param>
 	/// <returns>The element if the table contains it NULL if it isn't</returns>
-	T& operator[](int key) {
-		size_t index;
-		//Handle negative hash
-		if (key < 0) {
-			index = abs(key) % currentSize;
-		}
-		else
-		{
-			index = key % currentSize;
-		}
-		while (true) {
-			if (buckets[index].key == emptyCell.key) {
-				throw "No such element in the table";
-			}
-			else if (buckets[index].key == key) {
-				return buckets[index].value;
-			}
-
-			index = (index + 1) % currentSize;
-		}
+	inline T& operator[](int key) {
+		return GetElement(key);
 	}
+
+	/// <summary>
+	/// Get an element from the table
+	/// </summary>
+	/// <param name="key">The key how we will determine the element</param>
+	/// <returns>The element if the table contains it NULL if it isn't</returns>
+	inline const T& operator[](int key) const {
+		return GetElement(key);
+	}
+
 
 	/// <summary>
 	/// Adds an element to the hash table
 	/// </summary>
 	/// <param name="element">The element we want to add</param>
 	/// <returns>The key</returns>
-	int AddElement(T element) {
+	int AddElement(const T& element) {
 		int hash = Hash(element);
 		size_t index;
 		//Handle negative hash
@@ -134,12 +126,12 @@ public:
 	}
 
 	/// <summary>
-/// Adds an element to the hash table
-/// </summary>
-/// <param name="key">The key(hash) which will be used by the table</param>
-/// <param name="element">The element we want to add</param>
-/// <returns>The key</returns>
-	void AddElement(int key, T element) {
+	/// Adds an element to the hash table
+	/// </summary>
+	/// <param name="key">The key(hash) which will be used by the table</param>
+	/// <param name="element">The element we want to add</param>
+	/// <returns>The key</returns>
+	void AddElement(int key, const T& element) {
 		size_t index;
 		//Handle negative hash
 		if (key < 0) {
@@ -172,7 +164,7 @@ public:
 	/// 0-success
 	/// 1-not found
 	/// </returns>
-	unsigned char RemoveElement(T element) {
+	unsigned char RemoveElement(const T& element) {
 		int hash = Hash(element);
 		size_t index;
 		//Handle negative hash
@@ -204,7 +196,7 @@ public:
 	/// </summary>
 	/// <param name="key">The key to search for</param>
 	/// <returns>true if it has that key false if it isn't</returns>
-	bool ContainsKey(int key) {
+	bool ContainsKey(int key) const {
 		size_t index;
 		//Handle negative hash
 		if (key < 0) {
@@ -265,7 +257,7 @@ public:
 	/// </summary>
 	/// <param name="key">The key how we will determine the element</param>
 	/// <returns>The element if the table contains it NULL if it isn't</returns>
-	T GetElement(int key) {
+	T& GetElement(int key) {
 		size_t index;
 		//Handle negative hash
 		if (key < 0) {
@@ -277,7 +269,35 @@ public:
 		}
 		while (true) {
 			if (buckets[index].key == emptyCell.key) {
-				return NULL;
+				throw "The cell is empty";
+			}
+			else if (buckets[index].key == key) {
+				return buckets[index].value;
+			}
+
+			index = (index + 1) % currentSize;
+		}
+	}
+
+	/// <summary>
+	/// Get an element from the table
+	/// </summary>
+	/// <param name="key">The key how we will determine the element</param>
+	/// <returns>The element if the table contains it NULL if it isn't</returns>
+	const T& GetElement(int key) const {
+		size_t index;
+		//Handle negative hash
+		if (key < 0) {
+			index = abs(key) % currentSize;
+		}
+		else
+		{
+			index = key % currentSize;
+		}
+		while (true) {
+			if (buckets[index].key == emptyCell.key) {
+				throw "The cell is empty";
+
 			}
 			else if (buckets[index].key == key) {
 				return buckets[index].value;

@@ -59,7 +59,7 @@ private:
 	/// <param name="key">The key(hash) which will be used by the table</param>
 	/// <param name="element">The element we want to add</param>
 	/// <returns>The key</returns>
-	void AddElement(int key, T element) {
+	void AddElement(int key, const T& element) {
 		size_t index;
 		//Handle negative hash
 		if (key < 0) {
@@ -118,7 +118,7 @@ public:
 	/// <param name="key">The key which will be used by the table</param>
 	/// <param name="element">The element we want to add</param>
 	/// <returns>The key</returns>
-	void Add(K key, T element) {
+	void Add(K key, const T& element) {
 		size_t index;
 		int hash = Hash(key);
 		//Handle negative hash
@@ -149,7 +149,7 @@ public:
 	/// </summary>
 	/// <param name="key">The key to search for</param>
 	/// <returns>true if it has that key false if it isn't</returns>
-	bool ContainsKey(K key) {
+	bool ContainsKey(const K& key) {
 		size_t index;
 		int hash = Hash(key);
 		//Handle negative hash
@@ -180,7 +180,7 @@ public:
 	/// 0-success
 	/// 1-not found
 	/// </returns>
-	unsigned char RemoveByKey(K key) {
+	unsigned char RemoveByKey(const K& key) {
 		size_t index;
 		int hash = Hash(key);
 		//Handle negative hash
@@ -212,7 +212,7 @@ public:
 	/// </summary>
 	/// <param name="key">The key how we will determine the element</param>
 	/// <returns>The element if the table contains it NULL if it isn't</returns>
-	T GetElement(K key) {
+	T& GetElement(const K& key) {
 		int hash = Hash(key);
 		size_t index;
 		//Handle negative hash
@@ -225,7 +225,8 @@ public:
 		}
 		while (true) {
 			if (buckets[index].key == emptyCell.key) {
-				return NULL;
+				throw "The cell is empty";
+
 			}
 			else if (buckets[index].key == hash) {
 				return buckets[index].value;
@@ -234,12 +235,13 @@ public:
 			index = (index + 1) % currentSize;
 		}
 	}
+
 	/// <summary>
 	/// Get an element from the dictionary
 	/// </summary>
 	/// <param name="key">The key how we will determine the element</param>
 	/// <returns>The element if the table contains it NULL if it isn't</returns>
-	T& operator[](K key) {
+	const T& GetElement(const K& key) const {
 		int hash = Hash(key);
 		size_t index;
 		//Handle negative hash
@@ -252,7 +254,8 @@ public:
 		}
 		while (true) {
 			if (buckets[index].key == emptyCell.key) {
-				throw "No such element";
+				throw "The cell is empty";
+
 			}
 			else if (buckets[index].key == hash) {
 				return buckets[index].value;
@@ -260,6 +263,24 @@ public:
 
 			index = (index + 1) % currentSize;
 		}
+	}
+
+	/// <summary>
+	/// Get an element from the dictionary
+	/// </summary>
+	/// <param name="key">The key how we will determine the element</param>
+	/// <returns>The element if the table contains it NULL if it isn't</returns>
+	inline T& operator[](const K& key) {
+		return GetElement(key);
+	}
+
+	/// <summary>
+	/// Get an element from the dictionary
+	/// </summary>
+	/// <param name="key">The key how we will determine the element</param>
+	/// <returns>The element if the table contains it NULL if it isn't</returns>
+	inline const T& operator[](const K& key) const {
+		return GetElement(key);
 	}
 };
 
